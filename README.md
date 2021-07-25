@@ -76,3 +76,54 @@ function dialine() {
 function dedialine() {
 
 }
+------------------------------------------------------------------------------------------
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>
+        오목!
+    </title>
+
+
+    <style>
+        .row {
+            display: flex;
+        }
+
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 25px;
+            min-width: 25px;
+            border: 1px solid black;
+        }
+
+        #circle1 {
+            background-color: black;
+            width: 23px;
+            height: 23px;
+            border-radius: 100%;
+        }
+
+        #circle2 {
+            background-color: white;
+            width: 19px;
+            height: 19px;
+            border-radius: 100%;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="board">
+
+    </div>
+    <script src="./omock.js" type="text/javascript">
+    </script>
+</body>
+
+</html>
