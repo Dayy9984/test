@@ -1,54 +1,78 @@
-git ```
-┌───────────────────────────────────────────────┐
-                                       _       
-     __ _  ___   ___  _ __ _ __ ___   (_) ___  
-    / _` |/ _ \ / _ \| '__| '_ ` _ \  | |/ _ \ 
-   | (_| | (_) | (_) | |  | | | | | |_| | (_) |
-    \__, |\___/ \___/|_|  |_| |_| |_(_)_|\___/ 
-    |___/                                      
-			     🌩 𝘼𝙣𝙮𝙤𝙣𝙚 𝙘𝙖𝙣 𝙙𝙚𝙫𝙚𝙡𝙤𝙥!
-└───────────────────────────────────────────────┘
-```
+let board = document.querySelector("#board");
+let data = [];
+let turn = "black";
 
-이건 테스트
+for (let i = 0; i < 25; i++) {
+    data[i] = [];
+    for (let j = 0; j < 25; j++) {
+        data[i][j] = 0;
+    }
+}
 
-앞에 있는 커밋이에요
+data.forEach(function (rowdata, i) {
+    let row = document.createElement("div");
+    row.className = "row";
+    rowdata.forEach((_, j) => {
+        let cell = document.createElement("div");
+        cell.setAttribute("class", "cell");
+        cell.setAttribute("row", i);
+        cell.setAttribute("col", j);
+        cell.onclick = click;
+        row.append(cell);
+    })
+    board.append(row);
+})
 
-# goormIDE
-Welcome to goormIDE!
+function click(e) {
+    let p = document.createElement("div");
+    let currentrow = e.target.getAttribute("row")
+    let currentcol = e.target.getAttribute("col")
+    if (turn == "black") {
+        p.id = "circle1"
+        data[currentrow][currentcol] = "black"
+        checker(currentrow,currentcol)
+        turn = "white"
+    } else {
+        p.id = "circle2"
+        data[currentrow][currentcol] = "white"
+        checker(currentrow,currentcol)
+        turn = "black"
+    }
 
-goormIDE is a powerful cloud IDE service to maximize productivity for developers and teams.  
-**DEVELOP WITH EXCELLENCE**  
+    e.target.append(p);
+    
+}
 
-`Happy coding! The goormIDE team`
+function checker(currentrow,currentcol) {
+    if(data[currentrow][currentcol] == turn){
+        
+        let count = 0;
+        for(let i = -5 ; i < 5; i++){
+            console.log(+currentcol + i, data[currentrow][currentcol+i] == turn)
+            if(data[currentrow][+currentcol + i ] == turn){
+                count++
+                console.log(currentrow, currentcol+i, "에 더해짐 총 ", count)
+            }
+        }
+        if (count >= 5){
+            alert("승리")
+        }
+    }
+}
 
-뒤에있는 커밋입니다
 
-## 🔧 Tip & Guide
+function rowline() {
+    
+}
 
-* Command feature
-	* You can simply run your script using the shortcut icons on the top right.
-	* Check out `PROJECT > Common/Build/Run/Test/Find Command` in the top menu.
-	
-* Get URL and Port
-	* Click `PROJECT > URL/PORT` in top menu bar.
-	* You can get default URL/Port and add URL/Port in the top menu.
+function colline() {
 
-* Useful shortcut
-	
-| Shortcuts name     | Command (Mac) | Command (Window) |
-| ------------------ | :-----------: | :--------------: |
-| Copy in Terminal   | ⌘ + C         | Ctrl + Shift + C |
-| Paste in Terminal  | ⌘ + V         | Ctrl + Shift + V |
-| Search File        | ⌥ + ⇧ + F     | Alt + Shift + F  |
-| Terminal Toggle    | ⌥ + ⇧ + B     | Alt + Shift + B  |
-| New Terminal       | ⌥ + ⇧ + T     | Alt + Shift + T  |
-| Code Formatting    | ⌥ + ⇧ + P     | Alt + Shift + P  |
-| Show All Shortcuts | ⌘ + H         | Ctrl + H         |
+}
 
-## 💬 Support & Documentation
+function dialine() {
 
-Visit [https://ide.goorm.io](https://ide.goorm.io) to support and learn more about using goormIDE.  
-To watch some usage guides, visit [https://help.goorm.io/en/goormide](https://help.goorm.io/en/goormide)
+}
 
-가나다라마바사
+function dedialine() {
+
+}
