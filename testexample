@@ -1,0 +1,134 @@
+let board = document.querySelector("#board");
+let data = [];
+let turn = "black";
+
+
+for (let i = 0; i < 25; i++) {
+    data[i] = [];
+    for (let j = 0; j < 25; j++) {
+        data[i][j] = 0;
+    }
+}
+
+data.forEach(function (rowdata, i) {
+    let row = document.createElement("div");
+    row.className = "row";
+    rowdata.forEach((_, j) => {
+        let cell = document.createElement("div");
+        cell.setAttribute("class", "cell");
+        cell.setAttribute("row", i);
+        cell.setAttribute("col", j);
+        cell.onclick = click;
+        row.append(cell);
+    })
+    board.append(row);
+})
+
+function click(e) {
+    let p = document.createElement("div");
+    let currentrow = e.target.getAttribute("row")
+    let currentcol = e.target.getAttribute("col")
+    if (turn == "black") {
+        checker(currentrow, currentcol)
+        p.id = "circle1"
+        data[currentrow][currentcol] = "black"
+        turn = "white"
+    } else {
+        checker(currentrow, currentcol)
+        p.id = "circle2"
+        data[currentrow][currentcol] = "white"
+        turn = "black"
+    }
+    e.target.append(p);
+
+}
+
+function checker(currentrow, currentcol) {
+    if (data[currentrow][currentcol] == turn) {
+        rowline(currentrow, currentcol)
+        colline(currentrow, currentcol)
+        dialine(currentrow, currentcol)
+        dedialine(currentrow, currentcol)
+    }
+}
+
+
+function rowline(currentrow, currentcol) {
+    let count = 1;
+    let sw = 1;
+    for (let i = 0; i < 2; i++) { 
+        for (let j = 1; j < 5; j++) {
+            let row = +currentrow; 
+            let col = +currentcol + j*sw;
+
+            if (data[row][col] == turn) {
+                count++;
+            }
+            else {
+                break;
+            }
+        }
+        sw *= -1;
+    }
+    if (count == 5) alert("승리")
+}
+
+function colline() {
+    let count = 1;
+    let sw = 1;
+    for (let i = 0; i < 2; i++) { 
+        for (let j = 1; j < 5; j++) {
+            let row = +currentrow + j*sw; 
+            let col = +currentcol ;
+
+            if (data[row][col] == turn) {
+                count++;
+            }
+            else {
+                break;
+            }
+        }
+        sw *= -1;
+    }
+    if (count == 5) alert("승리")
+}
+
+function dialine() {
+    let count = 1;
+    let sw = 1;
+    for (let i = 0; i < 2; i++) { 
+        for (let j = 1; j < 5; j++) {
+            let row = +currentrow + j*sw; 
+            let col = +currentcol + j*sw;
+
+            if (data[row][col] == turn) {
+                count++;
+            }
+            else {
+                break;
+            }
+        }
+        sw *= -1;
+    }
+    if (count == 5) alert("승리")
+}
+
+function dedialine() {
+    let count = 1;
+    let sw = 1;
+    for (let i = 0; i < 2; i++) { 
+        for (let j = 1; j < 5; j++) {
+            let row = +currentrow + j*sw*-1; 
+            let col = +currentcol + j*sw;
+
+            if (data[row][col] == turn) {
+                count++;
+            }
+            else {
+                break;
+            }
+        }
+        sw *= -1;
+    }
+    if (count == 5) alert("승리")
+}
