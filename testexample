@@ -29,14 +29,14 @@ function click(e) {
     let currentrow = e.target.getAttribute("row")
     let currentcol = e.target.getAttribute("col")
     if (turn == "black") {
+        data[currentrow][currentcol] = "black"
         checker(currentrow, currentcol)
         p.id = "circle1"
-        data[currentrow][currentcol] = "black"
         turn = "white"
     } else {
+        data[currentrow][currentcol] = "white"
         checker(currentrow, currentcol)
         p.id = "circle2"
-        data[currentrow][currentcol] = "white"
         turn = "black"
     }
     e.target.append(p);
@@ -44,91 +44,112 @@ function click(e) {
 }
 
 function checker(currentrow, currentcol) {
+    let count = 0;
     if (data[currentrow][currentcol] == turn) {
-        rowline(currentrow, currentcol)
-        colline(currentrow, currentcol)
-        dialine(currentrow, currentcol)
-        dedialine(currentrow, currentcol)
+        count = rowline(currentrow, currentcol, 1, 1)
+        count += rowline(currentrow, currentcol, -1, 0)
+        condition(count)
+        count = 0;
+        count = colline(currentrow, currentcol, 1, 1)
+        count += colline(currentrow, currentcol, -1, 0)
+        console.log("count = ", count)
+        condition(count)
+        count = 0;
+        count = dialine(currentrow, currentcol, 1, 1)
+        count += dialine(currentrow, currentcol, -1, 0)
+        condition(count)
+        count = 0;
+        // count = dedialine(currentrow, currentcol, 1, 1)
+        // count += dedialine(currentrow, currentcol, -1, 0)
+        // condition(count)
+        // count = 0;
     }
+    
+}
+
+// for 문을 이용한 코딩
+// function rowline(currentrow, currentcol) {
+//     let count = 1;
+//     let sw = 1;
+//     for (let i = 0; i < 2; i++) { 
+//         for (let j = 1; j < 5; j++) {
+//             let row = +currentrow; 
+//             let col = +currentcol + j*sw;
+//             if (data[row][col] == turn) {
+//                 count++;
+//             }
+//             else {
+//                 break;
+//             }
+//         }
+//         sw *= -1;
+//     }
+//     if (count == 5) alert("승리")
+// }
+
+
+
+function rowline(currentrow, currentcol, direction, count) {
+    let row = +currentrow; 
+    let col = +currentcol + direction;
+
+    if(data[row][col] == turn) {
+        count = rowline(currentrow, col, direction, count + 1);
+    }
+    return count;
+}
+
+function colline(currentrow, currentcol, direction, count) {
+    let row = +currentrow + direction; 
+    let col = +currentcol ;
+    console.log(turn,data[row][col] == turn)
+    if(data[row][col] == turn) {
+        count = rowline(row, currentcol, direction, count + 1);
+    }
+    return count;
+}
+
+function dialine(currentrow, currentcol, direction, count) {
+    let row = +currentrow + direction; 
+    let col = +currentcol + direction;
+
+    if(data[row][col] == turn) {
+        count = rowline(row, col, direction, count + 1);
+    }
+    return count;
+}
+
+// function dialine(currentrow, currentcol, direction, count) {
+//     let row = +currentrow - direction; 
+//     let col = +currentcol + direction;
+    
+//     if(data[row][col] == turn) {
+//         count = rowline(row, currentcol, direction, count + 1);
+//     }
+//     return count;
+// }
+
+function condition(count){
+    if (count == 5) return alert ("승리")
 }
 
 
-function rowline(currentrow, currentcol) {
-    let count = 1;
-    let sw = 1;
-    for (let i = 0; i < 2; i++) { 
-        for (let j = 1; j < 5; j++) {
-            let row = +currentrow; 
-            let col = +currentcol + j*sw;
+// function dedialine(currentrow, currentcol) {
+//     let count = 1;
+//     let sw = 1;
+//     for (let i = 0; i < 2; i++) { 
+//         for (let j = 1; j < 5; j++) {
+//             let row = +currentrow + j*sw*-1; 
+//             let col = +currentcol + j*sw;
 
-            if (data[row][col] == turn) {
-                count++;
-            }
-            else {
-                break;
-            }
-        }
-        sw *= -1;
-    }
-    if (count == 5) alert("승리")
-}
-
-function colline() {
-    let count = 1;
-    let sw = 1;
-    for (let i = 0; i < 2; i++) { 
-        for (let j = 1; j < 5; j++) {
-            let row = +currentrow + j*sw; 
-            let col = +currentcol ;
-
-            if (data[row][col] == turn) {
-                count++;
-            }
-            else {
-                break;
-            }
-        }
-        sw *= -1;
-    }
-    if (count == 5) alert("승리")
-}
-
-function dialine() {
-    let count = 1;
-    let sw = 1;
-    for (let i = 0; i < 2; i++) { 
-        for (let j = 1; j < 5; j++) {
-            let row = +currentrow + j*sw; 
-            let col = +currentcol + j*sw;
-
-            if (data[row][col] == turn) {
-                count++;
-            }
-            else {
-                break;
-            }
-        }
-        sw *= -1;
-    }
-    if (count == 5) alert("승리")
-}
-
-function dedialine() {
-    let count = 1;
-    let sw = 1;
-    for (let i = 0; i < 2; i++) { 
-        for (let j = 1; j < 5; j++) {
-            let row = +currentrow + j*sw*-1; 
-            let col = +currentcol + j*sw;
-
-            if (data[row][col] == turn) {
-                count++;
-            }
-            else {
-                break;
-            }
-        }
-        sw *= -1;
-    }
-    if (count == 5) alert("승리")
-}
+//             if (data[row][col] == turn) {
+//                 count++;
+//             }
+//             else {
+//                 break;
+//             }
+//         }
+//         sw *= -1;
+//     }
+//     if (count == 5) alert("승리")
+// }
