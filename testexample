@@ -1,4 +1,3 @@
-
 let board = document.querySelector("#board");
 let data = [];
 let turn = "black";
@@ -30,13 +29,35 @@ function click(e) {
     let p = document.createElement("div");
     let currentrow = e.target.getAttribute("row")
     let currentcol = e.target.getAttribute("col")
+    let value
     if (turn == "black") {
         data[currentrow][currentcol] = "black"
-        p.id = checker(currentrow, currentcol)
+        value = checker(currentrow, currentcol)
+        if (value > 0) {
+            switch (turn) {
+                case "black":
+                    p.id = "circle1"
+                    break
+                case "white":
+                    p.id = "circle2"
+                    break
+            }
+
+        }
         turn = "white"
     } else {
         data[currentrow][currentcol] = "white"
-        p.id = checker(currentrow, currentcol)
+        value = checker(currentrow, currentcol)
+        if (value > 0) {
+            switch (turn) {
+                case "black":
+                    p.id = "circle1"
+                    break
+                case "white":
+                    p.id = "circle2"
+                    break
+            }
+        }
         turn = "black"
     }
     e.target.append(p);
@@ -44,32 +65,28 @@ function click(e) {
 }
 
 function checker(currentrow, currentcol) {
-    let count = 0;
-    let cell
+    var count = 0;
+    let cell = 1;
     if (data[currentrow][currentcol] == turn) {
         count = linecheck(currentrow, currentcol, direction[0], 1)
         count += linecheck(currentrow, currentcol, direction[1], 0)
-        cell = condition(currentrow, currentcol, count)
+        cell = cell()
         count = 0;
         count = linecheck(currentrow, currentcol, direction[2], 1)
         count += linecheck(currentrow, currentcol, direction[3], 0)
-        cell = condition(currentrow, currentcol, count)
+        cell = cell()
         count = 0;
         count = linecheck(currentrow, currentcol, direction[4], 1)
         count += linecheck(currentrow, currentcol, direction[5], 0)
-        cell = condition(currentrow, currentcol, count)
+        cell = cell()
         count = 0;
         count = linecheck(currentrow, currentcol, direction[6], 1)
         count += linecheck(currentrow, currentcol, direction[7], 0)
-        cell = condition(currentrow, currentcol, count)
+        cell = cell()
         count = 0;
     }
     console.log(cell)
-    if (cell == 1) {
-        if (turn == "black") return "circle1"
-        else return "circle2"
-    }
-    else return cell
+    return cell
 }
 
 function linecheck(currentrow, currentcol, direction, count) {
@@ -83,18 +100,25 @@ function linecheck(currentrow, currentcol, direction, count) {
     return count;
 }
 
-function condition(currentrow, currentcol, count) {
-    let p = document.createElement("div");
+function condition(count) {
     if (count == 5) {
         alert("승리")
         return 0;
     }
     else if (count > 5) {
         data[currentrow][currentcol] = 0
-        alert("6모라 둘수 없습니다.")
-        return "restriction"
+        alert(count + "모라 둘수 없습니다.")
+        return 0;
     }
-    return 1
+    return 1;
+}
+
+function cell(cell) {
+    let value = condition(this.count)
+    if (cell == 0) 
+        if (value == 0) return 0;
+    else cell 
+
 }
 
 // for 문을 이용한 코딩
