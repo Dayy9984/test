@@ -33,7 +33,7 @@ function click(e) {
     if (turn == "black") {
         data[currentrow][currentcol] = "black"
         value = checker(currentrow, currentcol)
-        if (value > 0) {
+        if (value == 1) {
             switch (turn) {
                 case "black":
                     p.id = "circle1"
@@ -42,7 +42,6 @@ function click(e) {
                     p.id = "circle2"
                     break
             }
-
         }
         turn = "white"
     } else {
@@ -65,27 +64,35 @@ function click(e) {
 }
 
 function checker(currentrow, currentcol) {
-    var count = 0;
-    let cell = 1;
+    let countr = 0;
+    let countl = 0;
+    let cell = 0;
     if (data[currentrow][currentcol] == turn) {
-        count = linecheck(currentrow, currentcol, direction[0], 1)
-        count += linecheck(currentrow, currentcol, direction[1], 0)
-        cell = cell()
-        count = 0;
-        count = linecheck(currentrow, currentcol, direction[2], 1)
-        count += linecheck(currentrow, currentcol, direction[3], 0)
-        cell = cell()
-        count = 0;
-        count = linecheck(currentrow, currentcol, direction[4], 1)
-        count += linecheck(currentrow, currentcol, direction[5], 0)
-        cell = cell()
-        count = 0;
-        count = linecheck(currentrow, currentcol, direction[6], 1)
-        count += linecheck(currentrow, currentcol, direction[7], 0)
-        cell = cell()
-        count = 0;
+        
+        countr = linecheck(currentrow, currentcol, direction[0], 1)
+        countl = linecheck(currentrow, currentcol, direction[1], 0)
+        cell = condition(countr, countl)
+        if ( cell == 0 ) return cell;
+        countr = 0; countl = 0;
+        
+        countr = linecheck(currentrow, currentcol, direction[2], 1)
+        countl = linecheck(currentrow, currentcol, direction[3], 0)
+        cell = condition(countr, countl)
+        if ( cell == 0 ) return cell;
+        countr = 0; countl = 0;
+        
+        countr = linecheck(currentrow, currentcol, direction[4], 1)
+        countl = linecheck(currentrow, currentcol, direction[5], 0)
+        cell = condition(countr, countl)
+        if ( cell == 0 ) return cell;
+        countr = 0; countl = 0;
+        
+        countr = linecheck(currentrow, currentcol, direction[6], 1)
+        countl = linecheck(currentrow, currentcol, direction[7], 0)
+        cell = condition(countr, countl)
+        if ( cell == 0 ) return cell;
+        countr = 0; countl = 0;
     }
-    console.log(cell)
     return cell
 }
 
@@ -100,26 +107,30 @@ function linecheck(currentrow, currentcol, direction, count) {
     return count;
 }
 
-function condition(count) {
-    if (count == 5) {
-        alert("승리")
+function condition(countr , countl) {
+    if ( (countr+countl) == 5) {
+        alert(turn+"돌의 승리")
         return 0;
     }
-    else if (count > 5) {
+    else if ( (countr+countl) > 5) {
         data[currentrow][currentcol] = 0
-        alert(count + "모라 둘수 없습니다.")
+        alert((countr+countl) + "모이기 때문에 해당 자리에 둘수 없습니다.")
+        return 0;
+    }
+    else if (countr == 3 && countl == 3){
+        data[currentrow][currentcol] = 0
+        alert("3.3 이기 때문에 해당자리에 둘수 없습니다")
+        return 0;
+    }
+    else if (countr == 4 && countl == 4){
+        data[currentrow][currentcol] = 0
+        alert("4.4 이기 때문에 해당자리에 둘수 없습니다")
         return 0;
     }
     return 1;
 }
 
-function cell(cell) {
-    let value = condition(this.count)
-    if (cell == 0) 
-        if (value == 0) return 0;
-    else cell 
 
-}
 
 // for 문을 이용한 코딩
 // function rowline(currentrow, currentcol) {
@@ -182,15 +193,6 @@ function cell(cell) {
             border: 2px solid black;
         }
         
-        #restriction {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 25px;
-            min-width: 25px;
-            border: 1px solid black;
-            background-color: white;
-        }
         
     </style>
 </head>
