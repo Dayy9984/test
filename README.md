@@ -127,3 +127,64 @@ function dedialine() {
 </body>
 
 </html>
+
+====================
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <link href=".\csstest.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="left-box">
+                <img src=".\lion.png" class="profile">
+                <div class="name">
+                    <h4 style="margin: 5px">이름</h4>
+                    <p style="margin: 5px">날짜</p>
+                </div>
+                <div>
+                    <h4 style="clear: both">블로그 글</h4>
+                    <p style="clear: both">가나다라마바사</p>
+                </div>
+
+            </div>
+            <div class="right-box">
+                <img src=".\tv.jpg" width="100%" height="150px">
+            </div>
+        </div>
+    </body>
+</html>
+==========================
+.container{
+    width: 800px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+     
+}
+
+.left-box{
+    width: 80%;
+    height: 200px;
+    float: left;
+}
+
+.profile{
+    width: 50px;
+    float: left;
+    margin: 5px
+}
+.name{
+    width: 100px;
+    float: left;
+    
+}
+
+.right-box {
+    width: 20%;
+    height: 200px;
+    float: right;
+}
